@@ -1,0 +1,1 @@
+The Clinic Management System is a restful web service built utilizing Entity Framework Core code first approach. The API provides a secure platform for managing clinic operations including patient registration, appointment scheduling and medical records management using JWT authentication
