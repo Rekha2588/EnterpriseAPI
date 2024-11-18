@@ -1,5 +1,6 @@
 ﻿using EnterpriseAPI.Contract;
 using EnterpriseAPI.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,7 +8,8 @@ namespace EnterpriseAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : ControllerBase
+	[EnableCors("AllowAllHeaders")]
+	public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
         public AuthController(IAuthService authService)
@@ -18,10 +20,12 @@ namespace EnterpriseAPI.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> Register(LoginUser loginUser)
         {
-            if (await _authService.Register(loginUser))
-                return Ok("Successfully created");
+            var result = await _authService.Register(loginUser);
+
+			if (result.Succeeded)
+                return Ok(result);
             else
-                return BadRequest("Something went wrong");
+                return BadRequest(result);
         }
 
         [HttpPost("Login")]

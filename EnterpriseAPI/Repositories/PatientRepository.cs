@@ -27,10 +27,10 @@ namespace EnterpriseAPI.Repositories
             return await _dbContext.Patients.FindAsync(patientId);
         }
 
-        public async Task<IEnumerable<Patient>> GetPatientByLastNameAndDateOfBirth(string lastName, string dateOfBirth)
+        public async Task<Patient> GetPatientByLastNameAndDateOfBirth(string lastName, string dateOfBirth)
         {
-            return await _dbContext.Patients.AsAsyncEnumerable().Where(p => p.LastName.ToLower() == lastName.ToLower() && p.DateOfBirth.ToString("yyyy-MM-dd") == dateOfBirth).ToListAsync();
-        }
+			return await _dbContext.Patients.AsAsyncEnumerable().FirstOrDefaultAsync(p => p.LastName.ToLower() == lastName.ToLower() && p.DateOfBirth.ToString("yyyy-MM-dd") == dateOfBirth);
+		}
 
         public async Task<IActionResult> CreateNewPatient(Patient patient)
         {

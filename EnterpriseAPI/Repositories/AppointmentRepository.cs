@@ -33,7 +33,14 @@ namespace EnterpriseAPI.Repositories
                 a.Status == (short)AppointmentStatus.Confirmed).ToListAsync();
         }
 
-        public async Task<IActionResult> CreateAppointment(Appointment appointment)
+		public async Task<IEnumerable<Appointment>> GetAppointmentsByDate(string date)
+		{
+			return await _dbContext.Appointments.Include(p => p.Patient).AsAsyncEnumerable()
+				.Where(a => a.StartTime.ToString("yyyy-MM-dd") == date &&
+				a.Status == (short)AppointmentStatus.Confirmed).ToListAsync();
+		}
+
+		public async Task<IActionResult> CreateAppointment(Appointment appointment)
         {
             if (appointment != null)
             {

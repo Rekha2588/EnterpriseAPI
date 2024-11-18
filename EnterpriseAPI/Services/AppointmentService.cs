@@ -33,8 +33,13 @@ namespace EnterpriseAPI.Services
             var appointments = await _appointmentRepository.GetAppointmentByLastNameAndDateOfBirth(lastName, dateOfBirth);
             return _mapper.Map<IEnumerable<AppointmentDto>>(appointments);
         }
+		public async Task<IEnumerable<AppointmentDto>> GetAppointmentsByDate(string date)
+		{
+			var appointments = await _appointmentRepository.GetAppointmentsByDate(date);
+			return _mapper.Map<IEnumerable<AppointmentDto>>(appointments);
+		}
 
-        public async Task<IActionResult> CreateAppointment(AppointmentAddUpdateDto appointmentDto)
+		public async Task<IActionResult> CreateAppointment(AppointmentAddUpdateDto appointmentDto)
         {
             var appointment = _mapper.Map<Appointment>(appointmentDto);
             return await _appointmentRepository.CreateAppointment(appointment);

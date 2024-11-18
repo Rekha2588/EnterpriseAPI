@@ -12,6 +12,16 @@ using System;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddCors(options =>
+{
+	options.AddPolicy("AllowAllHeaders",
+		builder =>
+		{
+			builder.AllowAnyOrigin()
+				   .AllowAnyHeader()
+				   .AllowAnyMethod();
+		});
+});
 
 // Add services to the container.
 builder.Services.AddDbContext<TakeCareDBContext>(options =>
@@ -35,6 +45,7 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("JWT:Key").Value))
     };
 });
+
 builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services.AddTransient<IPatientService, PatientService>();
 builder.Services.AddTransient<IAppointmentService, AppointmentService>();
@@ -83,10 +94,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseCors("AllowAllHeaders");
 
 app.MapControllers();
 

@@ -43,11 +43,11 @@ namespace EnterpriseAPI.Controllers
         }
 
         [HttpGet("GetPatientByLastNameAndDateOfBirth")]
-        public async Task<ActionResult<IEnumerable<PatientDto>>> GetPatientByLastNameAndDateOfBirth(string lastName, string dateOfBirth)
+        public async Task<ActionResult<PatientDto>> GetPatientByLastNameAndDateOfBirth(string lastName, string dateOfBirth)
         {
-            var patients = await _patientService.GetPatientByLastNameAndDateOfBirth(lastName, dateOfBirth);
-            if (patients != null)
-                return Ok(patients);
+            var patient = await _patientService.GetPatientByLastNameAndDateOfBirth(lastName, dateOfBirth);
+            if (patient != null)
+                return Ok(patient);
             else
                 return NotFound();
         }        

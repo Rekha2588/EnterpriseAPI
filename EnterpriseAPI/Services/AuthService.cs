@@ -19,7 +19,7 @@ namespace EnterpriseAPI.Services
             this._config = config;
         }
 
-        public async Task<bool> Register(LoginUser loginUser)
+        public async Task<IdentityResult> Register(LoginUser loginUser)
         {
             var identityUser = new IdentityUser
             {
@@ -28,7 +28,7 @@ namespace EnterpriseAPI.Services
             };
 
             var result = await _userManager.CreateAsync(identityUser, loginUser.Password);
-            return result.Succeeded;
+            return result;
         }
 
         public async Task<bool> Login(LoginUser loginUser)

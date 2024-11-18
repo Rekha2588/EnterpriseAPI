@@ -31,10 +31,10 @@ namespace EnterpriseAPI.Services
             return _mapper.Map<PatientDto>(patient);
         }
 
-        public async Task<IEnumerable<PatientDto>> GetPatientByLastNameAndDateOfBirth(string lastName, string dateOfBirth)
+        public async Task<PatientDto> GetPatientByLastNameAndDateOfBirth(string lastName, string dateOfBirth)
         {
-            var patients = await _patientRepository.GetPatientByLastNameAndDateOfBirth(lastName, dateOfBirth);
-            return _mapper.Map<IEnumerable<PatientDto>>(patients);
+            var patient = await _patientRepository.GetPatientByLastNameAndDateOfBirth(lastName, dateOfBirth);
+            return _mapper.Map<PatientDto>(patient);
         }        
 
         public async Task<IActionResult> CreateNewPatient(PatientAddUpdateDto patientDto)

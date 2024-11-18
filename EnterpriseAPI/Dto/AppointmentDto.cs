@@ -1,5 +1,6 @@
 ﻿
 using EnterpriseAPI.Enum;
+using EnterpriseAPI.Models;
 
 namespace EnterpriseAPI.Dto
 {
@@ -10,5 +11,6 @@ namespace EnterpriseAPI.Dto
         public string StartTime { get; set; }        
         public string EndTime { get; set; }        
         public int PatientId { get; set; }
-    }
+		public virtual PatientDto Patient { get; set; }
+	}
 }

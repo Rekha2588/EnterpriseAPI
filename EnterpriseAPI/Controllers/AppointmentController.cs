@@ -47,7 +47,17 @@ namespace EnterpriseAPI.Controllers
                 return NotFound();
         }
 
-        [HttpPost("CreateAppointment")]
+		[HttpGet("GetAppointmentsByDate")]
+		public async Task<ActionResult<IEnumerable<AppointmentDto>>> GetAppointmentsByDate(string date)
+		{
+			var appointments = await _appointmentService.GetAppointmentsByDate(date);
+			if (appointments != null)
+				return Ok(appointments);
+			else
+				return NotFound();
+		}
+
+		[HttpPost("CreateAppointment")]
         public async Task<IActionResult> CreateAppointment(AppointmentAddUpdateDto appointmentDto)
         {
             return await _appointmentService.CreateAppointment(appointmentDto);
